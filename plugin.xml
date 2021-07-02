@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="CustomPlugin.perspective">
+         <view
+               id="org.eclipse.jdt.ui.PackageExplorer"
+               minimized="false"
+               ratio="0.25"
+               relationship="left"
+               relative="org.eclipse.ui.editorss"
+               visible="true">
+         </view>
+         <view
+               closeable="true"
+               id="org.eclipse.ui.views.ContentOutline"
+               minimized="false"
+               ratio="0.5"
+               relationship="bottom"
+               relative="org.eclipse.jdt.ui.PackageExplorer"
+               visible="true">
+         </view>
+         <view
+               id="org.eclipse.ui.views.PropertySheet"
+               minimized="false"
+               moveable="true"
+               ratio="0.25"
+               relationship="stack"
+               relative="org.eclipse.ui.editorss"
+               visible="true">
+         </view>
+         <view
+               id="org.eclipse.ui.views.ProblemView"
+               minimized="false"
+               moveable="true"
+               ratio="0.25"
+               relationship="stack"
+               relative="org.eclipse.ui.editorss"
+               visible="true">
+         </view>
+         <view
+               id="org.eclipse.ui.console.ConsoleView"
+               minimized="false"
+               relationship="bottom"
+               relative="org.eclipse.ui.views.PropertySheet"
+               standalone="false">
+         </view>
+         <view
+               id="CustomPlugin.views.ExampleView1"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.jdt.ui.PackageExplorer">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="customplugin.views.SampleView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.ProblemView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="customplugin.PerspectiveFactory"
+            id="CustomPlugin.perspective"
+            name="Custom Perspective">
+      </perspective>
+   </extension>
+   <extension
+         id="CustomPlugin.views.cateogry"
+         point="org.eclipse.ui.views">
+      <view
+            class="customplugin.ViewPart1"
+            id="CustomPlugin.views.category"
+            name="name"
+            restorable="true">
+      </view>
+      <category
+            id="CustomPlugin"
+            name="Sample Category">
+      </category>
+      <view
+            category="CustomPlugin"
+            class="customplugin.views.SampleView"
+            icon="icons/sample.png"
+            id="customplugin.views.SampleView"
+            inject="true"
+            name="Sample View">
+      </view>
+      <category
+            id="CustomPlugin.views.category"
+            name="custom plugin views">
+      </category>
+      <view
+            category="CustomPlugin.views.category"
+            class="customplugin.views.ExampleView1"
+            id="CustomPlugin.views.ExampleView1"
+            name="example view 1"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="customplugin.handlers.SayHello"
+            id="CustomPlugin.commands.Hello"
+            name="Hello">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:CustomPlugin.views.ExampleView1">
+         <command
+               commandId="CustomPlugin.commands.Hello"
+               label="Hello Menu 1st"
+               style="push">
+         </command>
+         <menu
+               label="Hello Menu 2nd">
+            <command
+                  commandId="CustomPlugin.commands.Hello"
+                  label="Hello Menu 2nd&apos;s Child Menu"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:CustomPlugin.views.ExampleView1">
+         <command
+               commandId="CustomPlugin.commands.Hello"
+               icon="icons/sample.png"
+               label="Hello Toolbar 1st"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>
