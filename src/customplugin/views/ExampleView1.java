@@ -1,55 +1,96 @@
 package customplugin.views;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.swing.JFileChooser;
 
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
+import customplugin.wizards.TestWizard;
 
 public class ExampleView1 extends ViewPart {
 	public static final String ID = "CustomPlugin.views.ExampleView1";
 
 	public ExampleView1() {
-		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Auto-generated method stub
 		
-		//open a dialog window to select a file
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-		int result = fileChooser.showOpenDialog(fileChooser);
-		
-		if (result == JFileChooser.APPROVE_OPTION) {
-		    // user selects a file
-			File selectedFile = fileChooser.getSelectedFile();
-			System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-			
+			//Print something on the new window ExampleView1
 			Text text = new Text(parent, SWT.BORDER);
-			text.setText("Selected file: " + selectedFile.getAbsolutePath());
+			text.setText("Hello From ExampleView1");
+						
+			//Select projectExplorer view if it's not open Viewpart will be = NULL
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			IViewPart viewPart = page.findView("org.eclipse.ui.navigator.ProjectExplorer");
+			System.out.println("VIEW PART = " + (viewPart == null ? "null" : viewPart.getTitle()));
 			
-			//move the file
-			String src = selectedFile.getAbsolutePath();
-			String dest = "/home/ausy/Romain/dest.txt";
-	        try {
-				Path tmp = Files.copy(Paths.get(src), Paths.get(dest));
+			//Button to open new Wizard Pages 
+			Button button = new Button(parent, SWT.PUSH);
+			button.setText("Migration");
+			button.addSelectionListener(new SelectionAdapter() {
+			    @Override
+			    public void widgetSelected(SelectionEvent e) {
+			        WizardDialog wizardDialog = new WizardDialog(parent.getShell(), new TestWizard());
+
+			        if (wizardDialog.open() == Window.OK ) {
+			            System.out.println("Ok pressed");
+			        } else {
+			            System.out.println("Cancel pressed");
+			        }
+			    }
+			});
+	}
+	
+	/**
+	 * Function to write a select file in a new directory 
+	 */
+	private void writeFile(File selectedFile) {
+        
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Save As");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+          String src = selectedFile.getAbsolutePath();
+          String dest = chooser.getSelectedFile().toString();
+          InputStream is = null;
+          OutputStream os = null;
+          	try {
+				is = new FileInputStream(src);
+				os = new FileOutputStream(dest);
+				byte[] buffer = new byte[1024];
+				int len;
+				while ((len = is.read(buffer)) > 0) {
+				    os.write(buffer, 0, len);
+				}
+              is.close();
+              os.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
-		}
-		
-		
-
+			}
+        } else {
+          System.out.println("No Selection ");
+        }
 	}
 
 	@Override

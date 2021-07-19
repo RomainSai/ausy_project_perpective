@@ -6,12 +6,12 @@
       <perspectiveExtension
             targetID="CustomPlugin.perspective">
          <view
-               id="org.eclipse.jdt.ui.PackageExplorer"
+               id="org.eclipse.ui.navigator.ProjectExplorer"
                minimized="false"
                ratio="0.25"
                relationship="left"
                relative="org.eclipse.ui.editorss"
-               visible="true">
+               visible="true">    
          </view>
          <view
                closeable="true"
@@ -19,7 +19,7 @@
                minimized="false"
                ratio="0.5"
                relationship="bottom"
-               relative="org.eclipse.jdt.ui.PackageExplorer"
+               relative="org.eclipse.jdt.ui.ProjectExplorer"
                visible="true">
          </view>
          <view
@@ -47,12 +47,6 @@
                relative="org.eclipse.ui.views.PropertySheet"
                standalone="false">
          </view>
-         <view
-               id="CustomPlugin.views.ExampleView1"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.jdt.ui.PackageExplorer">
-         </view>
       </perspectiveExtension>
       <perspectiveExtension
             targetID="org.eclipse.jdt.ui.JavaPerspective">
@@ -69,7 +63,7 @@
       <perspective
             class="customplugin.PerspectiveFactory"
             id="CustomPlugin.perspective"
-            name="Custom Perspective">
+            name="%perspective.name">
       </perspective>
    </extension>
    <extension
@@ -78,12 +72,12 @@
       <view
             class="customplugin.ViewPart1"
             id="CustomPlugin.views.category"
-            name="name"
+            name="%view.name"
             restorable="true">
       </view>
       <category
             id="CustomPlugin"
-            name="Sample Category">
+            name="%category.name">
       </category>
       <view
             category="CustomPlugin"
@@ -91,17 +85,23 @@
             icon="icons/sample.png"
             id="customplugin.views.SampleView"
             inject="true"
-            name="Sample View">
+            name="%view.name.0">
       </view>
       <category
             id="CustomPlugin.views.category"
-            name="custom plugin views">
+            name="%category.name.0">
       </category>
       <view
             category="CustomPlugin.views.category"
             class="customplugin.views.ExampleView1"
             id="CustomPlugin.views.ExampleView1"
-            name="example view 1"
+            name="%view.name.1"
+            restorable="true">
+      </view>
+      <view
+            class="customplugin.views.TestView"
+            id="CustomPlugin.views.TestView"
+            name="%view.name.2"
             restorable="true">
       </view>
    </extension>
@@ -110,24 +110,44 @@
       <command
             defaultHandler="customplugin.handlers.SayHello"
             id="CustomPlugin.commands.Hello"
-            name="Hello">
+            name="%command.name">
+      </command>
+      <command
+            defaultHandler="customplugin.handlers.OpenView"
+            id="CustomPlugin.command.OpenView"
+            name="%command.name.0">
+      </command>
+      <command
+            defaultHandler="customplugin.handlers.TestView"
+            id="CustomPlugin.command.TestView"
+            name="%command.name.1">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:CustomPlugin.views.ExampleView1">
+            locationURI="menu:org.eclipse.ui.main.menu?after=window">
          <command
-               commandId="CustomPlugin.commands.Hello"
-               label="Hello Menu 1st"
+               commandId="CustomPlugin.command.OpenView"
+               label="%command.label"
                style="push">
          </command>
          <menu
-               label="Hello Menu 2nd">
+               label="%menu.label">
             <command
                   commandId="CustomPlugin.commands.Hello"
-                  label="Hello Menu 2nd&apos;s Child Menu"
+                  label="%command.label.0"
+                  style="push">
+            </command>
+            <command
+                  commandId="CustomPlugin.command.OpenView"
+                  label="%command.label.1"
+                  style="push">
+            </command>
+            <command
+                  commandId="CustomPlugin.command.TestView"
+                  label="%command.label.2"
                   style="push">
             </command>
          </menu>
@@ -138,10 +158,47 @@
          <command
                commandId="CustomPlugin.commands.Hello"
                icon="icons/sample.png"
-               label="Hello Toolbar 1st"
+               label="%command.label.3"
                style="push">
          </command>
       </menuContribution>
-   </extension>
 
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="customplugin.wizards.TestWizard"
+            id="CustomPlugin.wizards.TestWizard"
+            name="%wizard.name">
+      </wizard>
+   </extension>
+   <extension
+         id="CustomPlugin"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            description="custom plugin product description"
+            name="custom plugin product">
+         <property
+               name="CustomPlugin.property"
+               value="CustomPlugin.property">
+         </property>
+         <property
+               name="appName"
+               value="custom plugin product">
+         </property>
+      </product>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="custom plugin product">
+         <property
+               name="appName"
+               value="custom plugin product">
+         </property>
+      </product>
+   </extension>
 </plugin>

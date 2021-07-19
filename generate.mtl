@@ -1,0 +1,5 @@
+[comment Here is some comment of utter importance/]
+
+[module generate('') /]
+
+[import common /]

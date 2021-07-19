@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CustomPlugin
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: CustomPlugin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
@@ -9,3 +9,7 @@ Require-Bundle: org.eclipse.ui,
 Automatic-Module-Name: CustomPlugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: javax.inject
+Export-Package: customplugin,
+ customplugin.handlers,
+ customplugin.views,
+ customplugin.wizards
