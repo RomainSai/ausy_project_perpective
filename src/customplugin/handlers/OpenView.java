@@ -17,7 +17,7 @@ public class OpenView extends AbstractHandler {
 		
 		try {
 			//command to open a view with this id in parameter
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("CustomPlugin.views.ExampleView1");
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("CustomPlugin.views.ButtonView");
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

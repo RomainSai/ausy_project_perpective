@@ -93,8 +93,8 @@
       </category>
       <view
             category="CustomPlugin.views.category"
-            class="customplugin.views.ExampleView1"
-            id="CustomPlugin.views.ExampleView1"
+            class="customplugin.views.ButtonView"
+            id="CustomPlugin.views.ButtonView"
             name="%view.name.1"
             restorable="true">
       </view>
@@ -154,7 +154,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:CustomPlugin.views.ExampleView1">
+            locationURI="toolbar:CustomPlugin.views.ButtonView">
          <command
                commandId="CustomPlugin.commands.Hello"
                icon="icons/sample.png"
@@ -171,34 +171,5 @@
             id="CustomPlugin.wizards.TestWizard"
             name="%wizard.name">
       </wizard>
-   </extension>
-   <extension
-         id="CustomPlugin"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="org.eclipse.ui.ide.workbench"
-            description="custom plugin product description"
-            name="custom plugin product">
-         <property
-               name="CustomPlugin.property"
-               value="CustomPlugin.property">
-         </property>
-         <property
-               name="appName"
-               value="custom plugin product">
-         </property>
-      </product>
-   </extension>
-   <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="org.eclipse.ui.ide.workbench"
-            name="custom plugin product">
-         <property
-               name="appName"
-               value="custom plugin product">
-         </property>
-      </product>
    </extension>
 </plugin>

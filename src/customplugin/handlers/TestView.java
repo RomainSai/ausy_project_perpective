@@ -15,7 +15,6 @@ public class TestView extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
-		System.out.println("in TestView excute");
 		try {
 			//command to open a view with this id in parameter
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("CustomPlugin.views.TestView");

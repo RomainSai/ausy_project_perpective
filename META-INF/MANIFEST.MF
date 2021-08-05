@@ -13,3 +13,4 @@ Export-Package: customplugin,
  customplugin.handlers,
  customplugin.views,
  customplugin.wizards
+Bundle-ActivationPolicy: lazy

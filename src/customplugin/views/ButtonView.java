@@ -23,24 +23,19 @@ import org.eclipse.ui.part.ViewPart;
 
 import customplugin.wizards.TestWizard;
 
-public class ExampleView1 extends ViewPart {
-	public static final String ID = "CustomPlugin.views.ExampleView1";
+public class ButtonView extends ViewPart {
+	public static final String ID = "CustomPlugin.views.ButtonView";
 
-	public ExampleView1() {
+	public ButtonView() {
 	}
 	
 	@Override
 	public void createPartControl(Composite parent) {
 		
-			//Print something on the new window ExampleView1
+			//Print something on the new window ButtonView
 			Text text = new Text(parent, SWT.BORDER);
-			text.setText("Hello From ExampleView1");
-						
-			//Select projectExplorer view if it's not open Viewpart will be = NULL
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart viewPart = page.findView("org.eclipse.ui.navigator.ProjectExplorer");
-			System.out.println("VIEW PART = " + (viewPart == null ? "null" : viewPart.getTitle()));
-			
+			text.setText("Hello From ButtonView");
+									
 			//Button to open new Wizard Pages 
 			Button button = new Button(parent, SWT.PUSH);
 			button.setText("Migration");
@@ -59,7 +54,7 @@ public class ExampleView1 extends ViewPart {
 	}
 	
 	/**
-	 * Function to write a select file in a new directory 
+	 * Function to write a selected file in a new directory 
 	 */
 	private void writeFile(File selectedFile) {
         
